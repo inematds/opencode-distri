@@ -220,11 +220,11 @@
 <p class="sub">O que muda entre montar à mão em cada máquina e instalar pelo kit.</p>
 <div class="grid g2">
 <div class="card"><h3>😩 Antes</h3><p>Cada máquina tem um agente montado de um jeito. A configuração do PC não é a da VPS. Você não lembra que modelo está ligado onde, nem se algum deles está gastando crédito de API (o acesso pago por uso, cobrado à parte da assinatura) sem você saber. Quando o robô quebra, você não sabe por onde começar.</p></div>
-<div class="card"><h3>😌 Depois</h3><p>Um comando instala o mesmo agente, com as mesmas travas, em qualquer máquina. Uma checagem diz em segundos o que está ligado e o que está bloqueado. Para trocar o modelo de tudo, você muda num lugar só.</p></div>
+<div class="card"><h3>😌 Depois</h3><p>Um comando instala o mesmo agente, com as mesmas travas, em qualquer máquina. Uma checagem diz em segundos o que está ligado e o que está bloqueado. Para trocar o modelo, você muda um arquivo só em cada máquina.</p></div>
 </div>
 <div class="grid g3" style="margin-top:16px">
 <div class="card"><div class="num">1</div><h3>Use o que já paga</h3><p>A assinatura do ChatGPT vira o motor do agente. Não precisa de chave de API.</p></div>
-<div class="card"><div class="num">2</div><h3>Nada de gasto escondido</h3><p>O OpenRouter, que cobra por uso, e o modelo pesado no seu PC só ligam com uma liberação escrita: uma linha em que você diz o que aprovou, que a sua IA monta com você depois do seu sim. A trava vem ligada em qualquer máquina. Sem ela, o motor nem liga.</p></div>
+<div class="card"><div class="num">2</div><h3>Nada de gasto escondido</h3><p>O OpenRouter, que cobra por uso, e o modelo pesado no seu PC só ligam com uma liberação escrita: uma linha em que você diz o que aprovou, que a sua IA monta com você depois do seu sim. A trava vem ligada em qualquer máquina: sem a liberação, o motor pago nem liga.</p></div>
 <div class="card"><div class="num">3</div><h3>Um motor para robôs (próximo passo)</h3><p>O kit foi feito para o mesmo agente atender os robôs do Telegram e os sistemas do INEMA. Essa ligação ainda está sendo feita (<a href="#prova">veja o que falta</a>).</p></div>
 </div>
 </div></section>
@@ -244,10 +244,10 @@
 <h2>Como isso muda <span class="amb">o seu dia</span></h2>
 <div class="grid g3">
 <div class="card"><h3>Comprou uma VPS nova</h3><p><strong>Hoje:</strong> uma tarde instalando e copiando configuração.<br><strong>Com o kit:</strong> a sua IA instala daqui, pela conexão com a VPS, e ela fica igual à sua máquina. Você só faz o login do ChatGPT lá. (Esse caminho ainda não foi testado numa VPS de verdade.)</p></div>
-<div class="card"><h3>Quer trocar o modelo</h3><p><strong>Hoje:</strong> procurar em cada robô e em cada script onde está o nome do modelo.<br><strong>Com o kit:</strong> muda num arquivo só, e todas as máquinas com o kit passam a usar o novo.</p></div>
+<div class="card"><h3>Quer trocar o modelo</h3><p><strong>Hoje:</strong> procurar em cada robô e em cada script onde está o nome do modelo.<br><strong>Com o kit:</strong> em cada máquina, muda um arquivo só, e tudo o que usa o agente ali passa a usar o novo.</p></div>
 <div class="card"><h3>Ficou com medo da conta</h3><p><strong>Hoje:</strong> descobrir no fim do mês que um teste chamou uma API paga.<br><strong>Com o kit:</strong> sem a liberação escrita, o perfil pago nem liga.</p></div>
 </div>
-<div class="card" style="margin-top:16px"><h3>🕘 Um dia contado por horário</h3><p><strong>09:00</strong> no seu PC, você pede ao agente um resumo dos arquivos do projeto, e ele responde pela assinatura do ChatGPT. <strong>14:00</strong> na VPS, o mesmo agente organiza uma pasta, com as mesmas regras. (Quando a ligação com os robôs estiver pronta, o pedido das 09:00 poderá vir do Telegram.) <strong>20:00</strong> você quer testar um modelo sem censura no seu PC: escreve a liberação daquele modelo e roda. No fim, desliga o modelo para soltar a memória.</p></div>
+<div class="card" style="margin-top:16px"><h3>🕘 Um dia contado por horário</h3><p><strong>09:00</strong> no seu PC, você pede ao agente um resumo dos arquivos do projeto, e ele vai responder pela assinatura do ChatGPT (o login ainda não foi testado). <strong>14:00</strong> na VPS, o mesmo agente organiza uma pasta, com as mesmas regras. (Quando a ligação com os robôs estiver pronta, o pedido das 09:00 poderá vir do Telegram.) <strong>20:00</strong> você quer testar um modelo sem censura no seu PC: escreve a liberação daquele modelo e roda. No fim, desliga o modelo para soltar a memória.</p></div>
 </div></section>
 
 <section id="video"><div class="wrap">
@@ -280,7 +280,7 @@
 <p class="sub">Modelo "sem censura" é uma versão que não recusa pedidos. Serve para testar a segurança do seu sistema, pesquisar ou ter um assistente que não trava em assunto delicado. Já fizemos uma matéria só sobre isso, e o kit diz onde cada um se encaixa.</p>
 <div class="grid g3">
 <div class="card"><h3>🏠 No seu computador</h3><p>O caminho mais privado: nada sai da máquina, sem conta e sem identidade. Ele roda pelo Ollama, um programa grátis que põe modelos de IA para funcionar no seu PC. Por exemplo, as versões "Uncensored" do Qwen 3.8, um modelo aberto. Precisa de uma placa de vídeo com uns 17 GB de memória própria (a da placa, não a do PC) ou mais.</p></div>
-<div class="card"><h3>💳 Pelo OpenRouter</h3><p>Sem placa de vídeo, pago por uso. Tem modelos que recusam menos, como o "Venice: Uncensored", a partir de US$ 0,20 por milhão de palavras-pedaço (tokens) de entrada (preço conferido em 09/11/2026).</p></div>
+<div class="card"><h3>💳 Pelo OpenRouter</h3><p>Sem placa de vídeo, pago por uso. Tem modelos que recusam menos, como o "Venice: Uncensored", a partir de US$ 0,20 por milhão de tokens (pedaços de texto) de entrada (preço conferido em 09/11/2026).</p></div>
 <div class="card"><h3>🚪 Fora, por enquanto</h3><p>A Venice e a abliteration.ai, dois serviços pagos especializados em modelos sem censura, usados direto, têm os catálogos mais completos. Ficam trancadas até alguém liberar aquela API, e cada uma vai ganhar a sua própria trava.</p></div>
 </div>
 <div class="card" style="margin-top:16px"><h3>📚 A matéria completa</h3><p>A diferença entre os tipos, a tabela de provedores com preço, privacidade e identidade, e o uso responsável: tirar a trava do modelo não tira a lei.</p><p><a class="btn ghost" href="https://inematds.github.io/provedores-semcensura/guia/" rel="noopener" target="_blank">Ler: provedores de IA sem censura</a></p></div>
@@ -349,7 +349,7 @@ Quero ter o opencode igual em todas as minhas máquinas. Neste computador:
 <div class="card"><h3>Quanto custa?</h3><p>O kit e o opencode são grátis. O motor pode ser a assinatura do ChatGPT que você já tem, o OpenRouter (pago por uso) ou o seu computador (grátis, mas pede placa de vídeo).</p></div>
 <div class="card"><h3>Uso o Claude pela assinatura. Serve?</h3><p>Não pelo opencode: lá o Claude só entra por chave de API. Para o Claude pela assinatura, o caminho continua sendo o Claude Code.</p></div>
 <div class="card"><h3>Funciona no Windows?</h3><p>O kit tem o instalador do Windows, mas ele ainda não foi testado num Windows de verdade.</p></div>
-<div class="card"><h3>E as minhas senhas?</h3><p>A configuração proíbe o agente de ler os arquivos de senha e chave mais comuns (credenciais e chaves SSH, por exemplo), mas não todo arquivo: não deixe senha solta em arquivo de texto. A chave do OpenRouter fica no seu arquivo e só entra na hora, para aquele pedido.</p></div>
+<div class="card"><h3>E as minhas senhas?</h3><p>A configuração proíbe o agente de ler os arquivos de senha e chave mais comuns (credenciais e chaves SSH, por exemplo), mas não todo arquivo: não deixe senha solta em arquivo de texto. A chave do OpenRouter fica num arquivo que a sua IA indica na instalação e só entra na hora, para aquele pedido.</p></div>
 <div class="card"><h3>Posso usar um modelo sem censura?</h3><p>Pode, no seu computador ou pelo OpenRouter (<a href="#semcensura">veja onde</a>). Tirar a trava do modelo não tira a lei: o uso continua sendo responsabilidade sua.</p></div>
 </div>
 <p class="fonte" style="margin-top:22px">E você: em quantas máquinas o seu agente está montado hoje, e elas estão iguais? Grátis no inema.club, direto na internet.</p>
