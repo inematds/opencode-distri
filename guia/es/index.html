@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>opencode-distri: el mismo agente de IA en todas tus máquinas</title>
+<meta content="Kit gratis que instala opencode, un agente de IA de código abierto, igual en tu PC, en la VPS y en Windows, con solo tres motores: suscripción de ChatGPT, OpenRouter o modelo local, siempre con bloqueo." name="description"/>
+<meta content="opencode-distri: el mismo agente de IA en todas tus máquinas" property="og:title"/>
+<meta content="Tú eliges el motor: suscripción de ChatGPT, OpenRouter o tu computadora. Kit gratis de INEMA." property="og:description"/>
+<meta content="https://inematds.github.io/opencode-distri/guia/assets/banner-es.jpg" property="og:image"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --fill:#FACC15; --tint:rgba(250,204,21,.12); --ok:#7CE0C6; --bad:#F0918A;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --fill:#FACC15; --tint:#FEF9C3; --ok:#0E6B55; --bad:#A83426;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  body.light pre .k{color:#f0c070}
+  body.light nav{background:rgba(246,247,249,.85)}
+  body.light .amb{color:var(--txt);background:linear-gradient(transparent 55%,#FACC15 55%)}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  body.light main a:not(.btn),body.light footer a{color:#854d0e;text-decoration:underline;text-decoration-color:#FACC15;text-decoration-thickness:3px}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  p code,li code,td code{font-size:.9em;background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:.05em .35em}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:var(--tint)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--fill);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  nav .links a.sec{white-space:nowrap}
+  @media(max-width:1360px){nav .links a.opt{display:none}}
+  @media(max-width:860px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.15rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:44ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .oficial{display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--txt);font-size:.92rem;max-width:100%}
+  .oficial img{width:40px;height:40px;border-radius:8px;background:#fff;flex:none}
+  .oficial small{display:block;color:var(--mut,#9a9aa6);font-size:.8rem}
+  .quem-img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;margin:0 0 14px;display:block;border:1px solid var(--line)}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.95rem;margin:0}
+  .card p+p{margin-top:.6em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;margin:.4em 0 0}
+  pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:28px}
+  .step>div{min-width:0}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--fill);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .5em}
+  .quem{display:inline-block;font-family:Sora;font-size:.75rem;letter-spacing:.06em;color:var(--txt);background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:.1em .7em;margin-left:.5em;vertical-align:middle;font-weight:600}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+  /* números */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:720px){.stats{grid-template-columns:1fr}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .stat b{display:block;font:800 clamp(1.9rem,4vw,2.6rem)/1.05 Sora,sans-serif;letter-spacing:-.02em;color:var(--amb)}
+  body.light .stat b{color:var(--txt)}
+  .stat span{display:block;color:var(--mut);font-size:.93rem;margin-top:.5em}
+  .fonte{font-size:.86rem;color:var(--mut);margin-top:14px;max-width:80ch}
+  /* trocas */
+  .troca{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;padding:26px 0;border-top:1px solid var(--line)}
+  .troca:first-of-type{border-top:none}
+  .troca .n{width:64px;height:64px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;font:800 1.6rem Sora,sans-serif;color:var(--amb)}
+  body.light .troca .n{color:var(--txt);background:var(--fill);border-color:var(--fill)}
+  .troca h3{font-size:1.3rem;margin-bottom:.35em}
+  .troca p{margin:.35em 0;max-width:72ch}
+  .troca .ex{margin-top:.8em;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--fill);border-radius:10px;padding:12px 16px;font-size:.95rem;color:var(--mut);max-width:76ch}
+  .troca .ex b{color:var(--txt)}
+  @media(max-width:540px){.troca{grid-template-columns:1fr}}
+  /* três finais */
+  .vs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;max-width:900px}
+  @media(max-width:720px){.vs{grid-template-columns:1fr}}
+  .vs div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:.93rem}
+  .vs strong{display:block;font-family:Sora;margin-bottom:.25em}
+  .vs .r{display:block;margin-top:.5em;font-weight:600}
+  .vs .r.bad{color:var(--bad)} .vs .r.ok{color:var(--ok)}
+  .card ul{margin:8px 0 0;padding-left:20px}.card li{margin:5px 0}
+  /* prova */
+  .prova{background:var(--card);border:1px solid var(--amb);border-radius:16px;padding:26px 26px 22px;margin-top:6px}
+  body.light .prova{border-color:#EAB308}
+  .tl{list-style:none;margin:0;padding:0;counter-reset:t}
+  .tl li{position:relative;padding:0 0 18px 48px;counter-increment:t}
+  .tl li::before{content:counter(t);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:10px;background:var(--fill);color:#1a1206;font:800 .95rem/32px Sora,sans-serif;text-align:center}
+  .tl li::after{content:"";position:absolute;left:15px;top:36px;bottom:4px;width:2px;background:var(--line)}
+  .tl li:last-child::after{display:none}
+  .tl b{font-family:Sora}
+  blockquote{margin:6px 0 0;padding:14px 18px;border-left:3px solid var(--fill);background:var(--bg2);border-radius:0 10px 10px 0;font-size:1.02rem}
+  .prova .rod{font-size:.86rem;color:var(--mut);margin-top:14px}
+  /* parte técnica */
+  .techhead{background:var(--bg2);border-top:3px solid var(--fill);padding:58px 0 8px}
+  .techhead h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em;margin:.3em 0 0}
+  .techhead .sub{color:var(--mut);margin:.6em 0 1.2em;max-width:66ch}
+  .techzone{background:var(--bg2)}
+  .techzone .card{background:var(--card)}
+  .tbl{width:100%;border-collapse:collapse;font-size:.93rem}
+  .tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{font-family:Sora;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  @media(max-width:600px){.tbl thead{display:none} .tbl tr{display:block;border-bottom:1px solid var(--line);padding:6px 0} .tbl tr:last-child{border-bottom:none} .tbl td{display:block;border:none;padding:4px 14px}}
+</style>
+<style>
+  .hero .wrap.hero2{grid-template-columns:1.05fr .95fr;grid-template-areas:"top f2" "bot f1";column-gap:40px;row-gap:28px;align-items:center}
+  .hero2 .h-top{grid-area:top}.hero2 .h-bot{grid-area:bot}.hero2 .f1{grid-area:f1}.hero2 .f2{grid-area:f2}
+  .hero2 .h-bot p.lead{margin-top:0}
+  @media(max-width:780px){.hero .wrap.hero2{grid-template-columns:1fr;grid-template-areas:"top" "f2" "bot" "f1"}}
+  .rel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:.93rem}
+  .rel h4{font-family:Sora;font-size:.95rem;margin:.9em 0 .3em}
+  .rel h4:first-child{margin-top:0}
+  .rel p{margin:.2em 0;color:var(--mut)}
+  .rel .sim{display:inline-block;font:700 .7rem Sora;letter-spacing:.1em;color:#1a1206;background:var(--fill);border-radius:6px;padding:.1em .5em;margin-left:.4em;vertical-align:middle}
+</style>
+<style>
+  .kits{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+  @media(max-width:820px){.kits{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.kits{grid-template-columns:1fr}}
+  .kits a,.kits div{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--txt);font-size:.92rem}
+  .kits b{display:block;font-family:Sora;margin-bottom:.2em}
+  .kits .aqui{border-color:var(--amb)}
+</style>
+<link href="https://inematds.github.io/opencode-distri/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/opencode-distri/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/opencode-distri/guia/es/" hreflang="es" rel="alternate"/></head>
+<body>
+<nav><div class="wrap">
+<a class="brand" href="#top"><span class="emoji">🧭</span> opencode-distri</a>
+<span class="sep">|</span>
+<span class="clubpro">
+<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="sep">-</span>
+<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</span>
+<div class="links">
+<a class="sec" href="#explicado">El beneficio</a>
+<a class="sec" href="#quem">Para quién</a>
+<a class="sec opt" href="#dia">En tu día</a>
+<a class="sec opt" href="#como">Cómo funciona</a>
+<a class="sec opt" href="#semcensura">Sin censura</a>
+<a class="sec" href="#comecar">Cómo empezar</a>
+<a class="sec" href="#prova">La prueba</a>
+<span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
+<button aria-label="Cambiar tema" class="tgl" id="themeToggle" title="Cambiar tema">🌙</button>
+<a class="btn" href="https://github.com/inematds/opencode-distri" rel="noopener" target="_blank">GitHub</a>
+</div>
+</div></nav>
+<header class="hero" id="top">
+<div class="glow"></div>
+<div class="wrap hero2">
+<div class="h-top"><span class="chip">Kit gratis · basado en opencode, agente de IA de código abierto</span>
+<h1>Tienes más de una máquina y cada una tiene un agente diferente. Con <span class="amb">opencode-distri</span>, el mismo agente funciona en todas</h1></div>
+<figure class="f1"><img alt="Tres máquinas, una laptop, un servidor y una PC, conectadas por líneas de luz a un núcleo de IA en el centro" src="../assets/hero.jpg"/></figure>
+<div class="h-bot"><p class="lead">En la PC hay un agente, en la VPS hay otro, y en Windows nadie sabe cómo quedó. Cada uno tiene su propia configuración, y tu robot conversacional solo funciona donde lo configuraste. Este kit instala el mismo agente, con las mismas reglas, en cualquier máquina. Y tú eliges de dónde viene la inteligencia: de la suscripción de ChatGPT que ya pagas, de OpenRouter o de tu propia computadora.</p>
+<div class="cta">
+<a class="btn" href="#explicado">Qué ganas</a>
+<a class="btn ghost" href="#comecar">Cómo empezar</a>
+</div></div>
+<figure class="f2"><img alt="Tu agente en todas partes: el mismo agente de IA en tu PC, en la VPS y en Windows" src="../assets/banner-es.jpg"/></figure>
+</div>
+</header>
+<main>
+<section class="resumo" id="resumo"><div class="wrap">
+<span class="chip">En una frase</span>
+<p><strong>Configurar un agente de IA de nuevo en cada máquina cansa, y cada uno termina siendo diferente.</strong> opencode-distri es un kit gratis que instala <strong>opencode</strong>, un agente de IA de código abierto (lee archivos, escribe y ejecuta tareas por ti), de la misma manera en tu computadora, en una VPS (un servidor alquilado en internet) y en Windows. El kit deja solo tres motores posibles: tu <strong>suscripción de ChatGPT</strong>, <strong>OpenRouter</strong> (un servicio que da acceso a cientos de modelos y cobra por uso) y un <strong>modelo en tu propia computadora</strong>. Todo lo demás queda bloqueado, y el agente nunca abre tus archivos de contraseñas. Está hecho para ser el motor de tus robots de Telegram y de tus sistemas. Para usarlo, necesitas una computadora y una IA como Claude Code o Codex, que hace la instalación contigo.</p>
+</div></section>
+
+<section id="explicado"><div class="wrap">
+<span class="chip">El beneficio</span>
+<h2>Un solo agente, <span class="amb">igual en todas partes</span></h2>
+<p class="sub">Qué cambia entre configurarlo a mano en cada máquina e instalarlo con el kit.</p>
+<div class="grid g2">
+<div class="card"><h3>😩 Antes</h3><p>Cada máquina tiene un agente configurado de una manera distinta. La configuración de la PC no es la de la VPS. No recuerdas qué modelo está activo en cada lugar ni si alguno está gastando crédito de API sin que lo sepas. Cuando el robot falla, no sabes por dónde empezar.</p></div>
+<div class="card"><h3>😌 Después</h3><p>Un comando instala el mismo agente, con los mismos bloqueos, en cualquier máquina. Una revisión indica en segundos qué está activo y qué está bloqueado. Para cambiar el modelo en todo, lo cambias en un solo lugar.</p></div>
+</div>
+<div class="grid g3" style="margin-top:16px">
+<div class="card"><div class="num">1</div><h3>Usa lo que ya pagas</h3><p>La suscripción de ChatGPT se convierte en el motor del agente. No necesitas una clave de API.</p></div>
+<div class="card"><div class="num">2</div><h3>Sin gastos ocultos</h3><p>OpenRouter, que cobra por uso, y el modelo pesado en tu PC solo se activan con una autorización escrita que indica qué se aprobó.</p></div>
+<div class="card"><div class="num">3</div><h3>Un motor para tus robots</h3><p>El mismo agente puede atender tus robots de Telegram y tus sistemas, en vez de que cada uno tenga el suyo.</p></div>
+</div>
+</div></section>
+
+<section id="quem"><div class="wrap">
+<span class="chip">Para quién</span>
+<h2>Qué <span class="amb">gana cada persona</span></h2>
+<div class="grid g3">
+<div class="card"><img alt="Persona en casa con una laptop y una PC lado a lado que muestran la misma pantalla" class="quem-img" loading="lazy" src="../assets/quem-varias.jpg"/><h3>💻 Quienes usan varias máquinas</h3><p><strong>Ganan:</strong> el mismo agente en la laptop, la PC y la VPS, sin configurarlo tres veces.</p><p><strong>Y además:</strong> siempre saben qué modelo está activo en cada una.</p></div>
+<div class="card"><img alt="Desarrollador mirando un panel con varios robots conversacionales conectados a un servidor" class="quem-img" loading="lazy" src="../assets/quem-bots.jpg"/><h3>🤖 Quienes tienen robots y sistemas</h3><p><strong>Ganan:</strong> un motor abierto para los robots, junto a Claude y Codex, que pueden cambiar sin reescribir todo.</p><p><strong>Y además:</strong> funciona en una VPS sin tarjeta gráfica, mediante la suscripción.</p></div>
+<div class="card"><img alt="Investigadora de seguridad frente a dos monitores con gráficos de red" class="quem-img" loading="lazy" src="../assets/quem-seguranca.jpg"/><h3>🛡️ Quienes investigan seguridad</h3><p><strong>Ganan:</strong> el lugar indicado para activar un modelo sin censura y probar su propio sistema, en su computadora o mediante OpenRouter.</p><p><strong>Y además:</strong> el mismo bloqueo de archivos de contraseñas se aplica a cualquier modelo.</p></div>
+</div>
+</div></section>
+
+<section id="dia"><div class="wrap">
+<span class="chip">En tu día</span>
+<h2>Cómo cambia <span class="amb">tu día</span></h2>
+<div class="grid g3">
+<div class="card"><h3>Compraste una VPS nueva</h3><p><strong>Hoy:</strong> una tarde instalando y copiando configuraciones.<br><strong>Con el kit:</strong> tu IA ejecuta un comando desde aquí y la VPS queda igual que tu máquina. Solo tienes que iniciar sesión en ChatGPT allí.</p></div>
+<div class="card"><h3>Quieres cambiar de modelo</h3><p><strong>Hoy:</strong> buscar en cada robot y en cada script dónde está el nombre del modelo.<br><strong>Con el kit:</strong> lo cambias en un solo archivo y todos empiezan a usar el nuevo.</p></div>
+<div class="card"><h3>Te preocupa la cuenta</h3><p><strong>Hoy:</strong> descubrir a fin de mes que una prueba llamó a una API de pago.<br><strong>Con el kit:</strong> sin la autorización escrita, el perfil de pago ni siquiera se activa.</p></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>🕘 Un día, paso a paso</h3><p><strong>09:00</strong> le pides al robot de Telegram un resumen de los archivos del proyecto y opencode responde mediante la suscripción de ChatGPT. <strong>14:00</strong> en la VPS, el mismo agente organiza una carpeta con las mismas reglas. <strong>20:00</strong> quieres probar un modelo sin censura en tu PC: escribes la autorización para ese modelo y lo ejecutas. Al final, apagas el modelo para liberar memoria.</p></div>
+</div></section>
+
+<section id="video"><div class="wrap">
+<span class="chip">En video</span>
+<h2>Video en producción</h2>
+<!-- VIDEO: entra o explicavideo do projeto quando publicado -->
+<p class="sub">El video explicativo de este kit está en producción y se agregará aquí cuando se publique. Mientras tanto, los pasos están en <a href="#comecar">Cómo empezar</a>, y el video sobre modelos sin censura ya está disponible: <a href="https://www.youtube.com/watch?v=ZsnxZmxcOSQ" rel="noopener" target="_blank">IA sin censura: qué es y cómo funciona</a>.</p>
+</div></section>
+
+<section id="como"><div class="wrap">
+<figure style="margin:0 0 28px;border-radius:16px;overflow:hidden;border:1px solid var(--line)"><img alt="Los seis pasos de la guía: el problema, tres motores, en tu día, cómo funciona, sin censura, cómo empezar" src="../assets/banner-grade-es.jpg" style="width:100%;display:block"/></figure>
+<span class="chip">Cómo funciona</span>
+<h2>Cómo funciona, <span class="amb">sin tecnicismos</span></h2>
+<p class="sub">Piensa en un auto que puedes cargar combustible en tres estaciones, y solo en esas tres.</p>
+<div class="grid g3">
+<div class="card"><h3>🎫 Estación 1: la suscripción</h3><p>Como un plan mensual de combustible que ya tienes: inicias sesión en ChatGPT y el agente usa tu suscripción. Sin clave y sin otra cuenta.</p></div>
+<div class="card"><h3>💳 Estación 2: OpenRouter</h3><p>Pagas por litro. Tiene cientos de modelos, incluso algunos sin censura. La bomba solo se activa con una nota que indica qué aprobaste.</p></div>
+<div class="card"><h3>🏠 Estación 3: tu computadora</h3><p>Combustible de casa: el modelo funciona en tu máquina y nada sale de ella. Como ocupa mucha memoria, también solo se activa con la autorización para ese modelo.</p></div>
+</div>
+<div class="grid g2" style="margin-top:16px">
+<div class="card"><h3>🔒 La puerta cerrada</h3><p>Cualquier otra estación viene bloqueada de fábrica, incluidos los modelos “gratis” del propio opencode, que también usan una API. Y el agente nunca abre los archivos donde están tus contraseñas y claves, sin importar el modelo.</p></div>
+<div class="card"><h3>🩺 La revisión</h3><p>Una revisión rápida muestra la versión, si el bloqueo está activo, qué tiene la sesión iniciada y qué modelo usaría cada estación. Tarda segundos y no llama a ningún modelo.</p></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>⚠️ Lo que no promete</h3><p>No existe una suscripción de Claude dentro de opencode: allí Claude solo funciona con una clave de API, es decir, se paga por separado. Para usar Claude con la suscripción, sigue usando Claude Code. Además, el kit todavía no se ejecutó con ningún modelo real, y la versión de Windows no se probó en un Windows real (<a href="#prova">ver la prueba</a>).</p></div>
+</div></section>
+
+<section id="semcensura"><div class="wrap">
+<span class="chip">Sin censura</span>
+<h2>Modelos sin censura: <span class="amb">dónde entran</span></h2>
+<p class="sub">Un modelo “sin censura” es una versión que no rechaza solicitudes. Sirve para probar la seguridad de tu sistema, investigar o tener un asistente que no se bloquee con temas delicados. Ya publicamos un artículo sobre esto, y el kit indica dónde encaja cada opción.</p>
+<div class="grid g3">
+<div class="card"><h3>🏠 En tu computadora</h3><p>La opción más privada: nada sale de la máquina, sin cuenta ni identidad. Por ejemplo, las versiones “Uncensored” de Qwen 3.8 publicadas en Ollama. Necesitas una buena tarjeta gráfica.</p></div>
+<div class="card"><h3>💳 Mediante OpenRouter</h3><p>Sin tarjeta gráfica, pagas por uso. Hay modelos que rechazan menos, como “Venice: Uncensored”, desde US$ 0,20 por millón de fragmentos de palabras (tokens) de entrada (precio verificado el 09/11/2026).</p></div>
+<div class="card"><h3>🚪 Fuera, por ahora</h3><p>Venice y abliteration.ai, directamente, tienen los catálogos más completos. Permanecen bloqueadas hasta que alguien autorice esa API, y cada una tendrá su propio bloqueo.</p></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>📚 El artículo completo</h3><p>La diferencia entre los tipos, la tabla de proveedores con precio, privacidad e identidad, y el uso responsable: quitar el bloqueo del modelo no elimina la ley.</p><p><a class="btn ghost" href="https://inematds.github.io/provedores-semcensura/guia/es/" rel="noopener" target="_blank">Leer: proveedores de IA sin censura</a></p></div>
+</div></section>
+
+<section id="comecar"><div class="wrap">
+<span class="chip">Cómo empezar</span>
+<h2>Pídele a tu IA que <span class="amb">lo instale contigo</span></h2>
+<p class="sub">No tienes que instalar nada a mano. La IA lee el kit, revisa tu máquina, te explica qué hará y solo continúa después de que aceptes.</p>
+<div class="grid g3">
+<div class="card"><h3>1. Abre tu IA en la computadora</h3><p><strong>Claude Code</strong> (de Claude) o <strong>Codex</strong> (de ChatGPT): asistentes que trabajan en tu computadora y vienen con sus respectivas suscripciones de pago. Se abren en una ventana de texto, pero puedes conversar en español.</p></div>
+<div class="card"><h3>2. Pega la solicitud de abajo</h3><p>Le pide a la IA que lea el kit, revise tu máquina y te diga, en palabras sencillas, qué te conviene.</p></div>
+<div class="card"><h3>3. Acepta lo que te parezca bien</h3><p>La IA instala, ejecuta la revisión y muestra el resultado. Tú inicias sesión en ChatGPT una vez por máquina, en una ventana del navegador.</p></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>🧰 ¿Todavía no tienes Claude Code ni Codex?</h3><p>La página de cada uno tiene el botón para descargar y los pasos: <a href="https://claude.com/product/claude-code" rel="noopener" target="_blank">Claude Code</a> · <a href="https://openai.com/codex/" rel="noopener" target="_blank">Codex</a>.</p></div>
+<p class="mut" style="margin-top:20px">No necesitas entender el texto de abajo: es para la IA. Cópialo y pégalo.</p>
+<div class="pedido" style="margin-top:8px;position:relative">
+<pre id="pedidoTxt" style="white-space:pre-wrap">Lee el kit "opencode-distri" en https://github.com/inematds/opencode-distri (README, PENDENCIAS.md y docs/).
+Quiero tener opencode igual en todas mis máquinas. En esta computadora:
+1. Revisa el sistema (Linux, Windows o VPS), si ya tengo Node, Ollama y una tarjeta gráfica, y si ya existe
+   alguna configuración de opencode. Todavía no cambies nada.
+2. Dime en palabras sencillas cuáles de los tres motores tienen sentido para mí (suscripción de ChatGPT,
+   OpenRouter, modelo local) y cuánto cuesta cada uno.
+3. Solo después de que acepte, ejecuta el instalador adecuado del kit (instalar/linux.sh o instalar/windows.ps1)
+   y la revisión "ocd doctor". Muéstrame el resultado.
+4. No llames a ningún modelo, no uses claves de API y no descargues ningún modelo sin que te lo pida.
+   Yo inicio sesión en ChatGPT.</pre>
+<button class="btn" id="copiarPedido" style="margin-top:10px">Copiar la solicitud</button>
+</div>
+<div class="grid g2" style="margin-top:16px">
+<div class="card"><h3>🌐 ¿Se puede usar sin instalar?</h3><p>No. El agente trabaja con los archivos de tu máquina, así que tiene que estar allí. Lo que puedes consultar sin instalar es el kit y los pasos en GitHub.</p></div>
+<div class="card"><h3>⬇️ ¿Dónde se descarga?</h3><p>No hay un instalador con ventanas: el kit es una carpeta pequeña con los instaladores, y la solicitud de arriba ya le pide a la IA que lo descargue. Si quieres los archivos:</p><p><a class="btn ghost" href="https://github.com/inematds/opencode-distri/archive/refs/heads/main.zip">Descargar el kit (ZIP)</a></p></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>🛠️ ¿Tienes conocimientos técnicos y prefieres hacerlo a mano?</h3><p>Los comandos, perfiles, configuración y pruebas están en el README de GitHub.</p><p><a class="btn ghost" href="https://github.com/inematds/opencode-distri/blob/main/README.es.md#instalación-técnica" rel="noopener" target="_blank">Ver la instalación técnica</a></p></div>
+</div></section>
+
+<section id="base"><div class="wrap">
+<span class="chip">De dónde viene</span>
+<h2>La <span class="amb">base</span></h2>
+<div class="grid g2">
+<div class="card"><h3>🧭 opencode</h3><p>El agente es opencode, de código abierto, versión 2.4.2. El kit no cambia el programa: solo lo instala y configura los bloqueos.</p><p><a href="https://opencode.ai" rel="noopener" target="_blank">opencode.ai</a></p></div>
+<div class="card"><h3>📚 Proveedores sin censura</h3><p>La información sobre modelos sin censura viene de nuestro artículo del 09/11/2026, con datos tomados de las páginas públicas de los proveedores.</p><p><a href="https://inematds.github.io/provedores-semcensura/guia/es/" rel="noopener" target="_blank">inematds/provedores-semcensura</a></p></div>
+</div>
+</div></section>
+
+<section id="prova"><div class="wrap">
+<span class="chip">La prueba</span>
+<h2>Lo que ya se <span class="amb">verificó</span></h2>
+<div class="grid g3">
+<div class="card"><div class="num">21</div><h3>pruebas, cero fallas</h3><p>El bloqueo detiene a los otros proveedores, el agente no ve los modelos “gratis” y la revisión funciona. Ninguna prueba llama a un modelo.</p></div>
+<div class="card"><div class="num">1</div><h3>máquina configurada</h3><p>Instalado en la computadora del INEMA, con Linux y tarjeta gráfica. La revisión funciona.</p></div>
+<div class="card"><div class="num">0</div><h3>modelos ejecutados</h3><p>Por decisión nuestra, todavía no se ejecutó con un modelo real. La primera prueba con un modelo en la propia computadora está en la lista de pendientes.</p></div>
+</div>
+<p class="mut" style="margin-top:16px">Lo que falta, en orden: probar un modelo, iniciar sesión en ChatGPT, probar una VPS y un Windows real, y conectar el agente con los robots. La lista completa está en <a href="https://github.com/inematds/opencode-distri/blob/main/PENDENCIAS.md" rel="noopener" target="_blank">PENDENCIAS.md</a> (en portugués).</p>
+</div></section>
+
+<section id="faq"><div class="wrap">
+<span class="chip">Preguntas frecuentes</span>
+<h2>Antes de <span class="amb">empezar</span></h2>
+<div class="grid g2">
+<div class="card"><h3>¿Necesito saber programar?</h3><p>No. Pegas la solicitud y la IA instala todo contigo. Los comandos están en el README para quien prefiera usarlos.</p></div>
+<div class="card"><h3>¿Cuánto cuesta?</h3><p>El kit y opencode son gratis. El motor puede ser la suscripción de ChatGPT que ya tienes, OpenRouter (pagas por uso) o tu computadora (gratis, pero necesitas una tarjeta gráfica).</p></div>
+<div class="card"><h3>Uso Claude con mi suscripción. ¿Me sirve?</h3><p>No con opencode: allí Claude solo funciona con una clave de API. Para usar Claude con la suscripción, sigue eligiendo Claude Code.</p></div>
+<div class="card"><h3>¿Funciona en Windows?</h3><p>El kit tiene un instalador para Windows, pero todavía no se probó en un Windows real.</p></div>
+<div class="card"><h3>¿Y mis contraseñas?</h3><p>El agente tiene instrucciones de nunca abrir archivos de contraseñas y claves. La clave de OpenRouter queda en tu archivo y solo se usa en el momento, para esa solicitud.</p></div>
+<div class="card"><h3>¿Puedo usar un modelo sin censura?</h3><p>Sí, en tu computadora o mediante OpenRouter (<a href="#semcensura">ver dónde</a>). Quitar el bloqueo del modelo no elimina la ley: el uso sigue siendo tu responsabilidad.</p></div>
+</div>
+<p class="fonte" style="margin-top:22px">Y tú: ¿en cuántas máquinas tienes configurado tu agente hoy y están iguales? Gratis en inema.club, directamente en internet.</p>
+</div></section>
+</main>
+<footer>
+<div class="wrap">
+<div class="pill">Kit gratis</div><div class="pill">opencode 2.4.2</div><div class="pill">Linux · VPS · Windows</div><div class="pill">PT · EN · ES</div>
+<p style="margin-top:18px">opencode-distri · kit de INEMA, no oficial de opencode · gratis en inema.club, directamente en internet ·
+      <a href="https://github.com/inematds/opencode-distri">inematds/opencode-distri</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+  (function(){
+    var KEY='opencode-distri-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+  (function(){
+    var bt=document.getElementById('copiarPedido'), tx=document.getElementById('pedidoTxt');
+    if(!bt||!tx) return;
+    bt.addEventListener('click',function(){
+      try{ navigator.clipboard.writeText(tx.textContent).then(function(){ bt.textContent='Copiado ✓'; setTimeout(function(){bt.textContent='Copiar la solicitud';},2000); }); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>

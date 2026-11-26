@@ -1,6 +1,41 @@
 # opencode-distri
 
-Instala o [opencode](https://opencode.ai) (CLI de agente aberta, 2.x) do mesmo jeito em qualquer lugar — esta máquina, um Windows, uma VPS — e deixa ele pronto para virar motor no inemaccbot, openpcbotv3, exb (enginebridge) e intelecto.
+[![Seu agente em todo lugar](guia/assets/banner.jpg)](https://inematds.github.io/opencode-distri/guia/)
+
+**🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
+
+## O que é
+
+Montar um agente de IA de novo em cada máquina cansa, e cada um acaba diferente do outro. O opencode-distri é um kit gratuito que instala o **opencode**, um agente de IA de código aberto, do mesmo jeito no seu computador, numa VPS e no Windows. O kit deixa só três motores possíveis: a sua **assinatura do ChatGPT**, o **OpenRouter** (pago por uso) e um **modelo no seu próprio computador** (Ollama). Todo o resto fica trancado, e o agente nunca abre os seus arquivos de senha. Ele é feito para virar o motor dos seus robôs do Telegram e dos seus sistemas.
+
+## 📖 Guia de uso
+
+Guia completo (landing + passo a passo): **https://inematds.github.io/opencode-distri/guia/**
+
+## Peça para a sua IA instalar com você
+
+Abra o Claude Code ou o Codex no seu computador e cole:
+
+```
+Leia o kit "opencode-distri" em https://github.com/inematds/opencode-distri (README, PENDENCIAS.md e docs/).
+Quero ter o opencode igual em todas as minhas máquinas. Neste computador:
+1. Veja o sistema (Linux, Windows ou VPS), se já tenho Node, Ollama e placa de vídeo, e se já existe
+   alguma configuração do opencode. Não mude nada ainda.
+2. Me diga em linguagem simples quais dos três motores fazem sentido para mim (assinatura ChatGPT,
+   OpenRouter, modelo local) e o que cada um custa.
+3. Só depois do meu sim, rode o instalador certo do kit (instalar/linux.sh ou instalar/windows.ps1)
+   e o check-up "ocd doctor". Mostre o resultado.
+4. Não chame nenhum modelo, não use chave de API e não baixe modelo sem eu pedir.
+   O login do ChatGPT eu faço.
+```
+
+Não há versão online: o agente trabalha nos arquivos da sua máquina. Para baixar à mão: [kit em ZIP](https://github.com/inematds/opencode-distri/archive/refs/heads/main.zip).
+
+---
+
+## Instalação técnica
+
+O kit instala o [opencode](https://opencode.ai) (CLI de agente aberta, 2.x) do mesmo jeito em qualquer lugar — esta máquina, um Windows, uma VPS — e deixa ele pronto para virar motor no inemaccbot, openpcbotv3, exb (enginebridge) e intelecto.
 
 Três caminhos de modelo, e só eles:
 
