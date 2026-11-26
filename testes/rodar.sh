@@ -30,6 +30,7 @@ grep -v '"ollama"' "$RAIZ/config/opencode.jsonc.modelo" > "$TMP/sem.jsonc"
 t "config com Ollama é JSONC válido" jsonc_ok "$TMP/com.jsonc"
 t "config sem Ollama é JSONC válido" jsonc_ok "$TMP/sem.jsonc"
 t "config bloqueia * e libera só 3"  bash -c "grep -c '\"effect\": \"allow\"' '$TMP/com.jsonc' | grep -qx 3 && grep -q '\"resource\": \"\\*\", \"effect\": \"deny\"' '$TMP/com.jsonc'"
+t "config nega leitura de segredos (env, credenciais, ssh, pem, key, netrc)" bash -c "for r in '*.env' '*credentials*' '*/.ssh/*' '*id_rsa*' '*id_ed25519*' '*.pem' '*.key' '*.netrc'; do grep -qF \"\\\"resource\\\": \\\"\$r\\\", \\\"effect\\\": \\\"deny\\\"\" '$TMP/com.jsonc' || exit 1; done"
 t "config não tem chave escrita"     nao grep -qiE 'sk-or-|sk-[a-z0-9]{20}' "$RAIZ/config/opencode.jsonc.modelo"
 
 # 3. perfis e travas (sem rede)

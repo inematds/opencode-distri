@@ -10,6 +10,7 @@ Estado em 26/11/2026 (v0.2.0). O que falta para continuar depois, em ordem. Mais
 2. [ ] **Login da assinatura ChatGPT** (`ocd login` → "Sign in with ChatGPT"). Feito pelo Nei, uma vez por máquina. Repetir o teste de fumaça com `-p assinatura`.
 3. [ ] **Perfil OpenRouter**: o mesmo teste com `-p openrouter`, só com o OK da API citado em `OCD_APROVADO_OPENROUTER`.
 4. [ ] **Windows real**: `instalar/windows.ps1` e `bin/ocd.ps1` nunca rodaram num Windows.
+5b. [ ] **Trava de segredos na prática**: no teste de fumaça, pedir ao agente que leia um `.env`, um `id_ed25519` e um `.pem` falsos e confirmar que ele recusa. Os padrões de `permissions` só foram conferidos no arquivo, não no opencode.
 5. [ ] **VPS real**: `instalar/remoto.sh` nunca rodou numa VPS, nem com Ollama local nem pela Tailscale.
 
 ## Motor nos sistemas (depois dos testes)

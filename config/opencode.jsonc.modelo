@@ -12,11 +12,19 @@
     { "action": "provider.use", "resource": "ollama", "effect": "allow" }
   ],
 
-  // O agente nunca lê arquivo de segredo.
+  // O agente não lê os arquivos de segredo mais comuns (.env, credenciais, chaves SSH, .pem/.key, .netrc).
+  // Não cobre todo arquivo sensível: o efeito real destes padrões ainda não foi testado com modelo (PENDENCIAS.md).
   "permissions": [
     { "action": "read", "resource": "*.env", "effect": "deny" },
     { "action": "read", "resource": "*.env.*", "effect": "deny" },
-    { "action": "read", "resource": "*credentials*", "effect": "deny" }
+    { "action": "read", "resource": "*credentials*", "effect": "deny" },
+    { "action": "read", "resource": "*/.ssh/*", "effect": "deny" },
+    { "action": "read", "resource": "*id_rsa*", "effect": "deny" },
+    { "action": "read", "resource": "*id_ed25519*", "effect": "deny" },
+    { "action": "read", "resource": "*id_ecdsa*", "effect": "deny" },
+    { "action": "read", "resource": "*.pem", "effect": "deny" },
+    { "action": "read", "resource": "*.key", "effect": "deny" },
+    { "action": "read", "resource": "*.netrc", "effect": "deny" }
   ],
 
   "providers": {

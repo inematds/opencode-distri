@@ -6,7 +6,7 @@
 
 ## O que é
 
-Montar um agente de IA de novo em cada máquina cansa, e cada um acaba diferente do outro. O opencode-distri é um kit gratuito que instala o **opencode**, um agente de IA de código aberto, do mesmo jeito no seu computador, numa VPS e no Windows. O kit deixa só três motores possíveis: a sua **assinatura do ChatGPT**, o **OpenRouter** (pago por uso) e um **modelo no seu próprio computador** (Ollama). Todo o resto fica trancado, e o agente nunca abre os seus arquivos de senha. Ele é feito para virar o motor dos seus robôs do Telegram e dos seus sistemas.
+Montar um agente de IA de novo em cada máquina cansa, e cada um acaba diferente do outro. O opencode-distri é um kit gratuito que instala o **opencode**, um agente de IA de código aberto, do mesmo jeito no seu computador, numa VPS e no Windows. O kit deixa só três motores possíveis: a sua **assinatura do ChatGPT**, o **OpenRouter** (pago por uso) e um **modelo no seu próprio computador** (Ollama). Todo o resto fica trancado, e o agente fica proibido de ler os arquivos de senha e chave mais comuns. Ele é feito para virar o motor dos seus robôs do Telegram e dos seus sistemas.
 
 ## 📖 Guia de uso
 
