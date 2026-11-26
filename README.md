@@ -27,6 +27,9 @@ Quero ter o opencode igual em todas as minhas máquinas. Neste computador:
    e o check-up "ocd doctor". Mostre o resultado.
 4. Não chame nenhum modelo, não use chave de API e não baixe modelo sem eu pedir.
    O login do ChatGPT eu faço.
+5. Se eu quiser também na minha VPS: me pergunte o endereço e a chave SSH, instale daqui com
+   instalar/remoto.sh e me passe a linha do login do ChatGPT para eu rodar lá
+   (ssh -t ... opencode auth login openai). Avise que esse caminho ainda não foi testado numa VPS real.
 ```
 
 Não há versão online: o agente trabalha nos arquivos da sua máquina. Para baixar à mão: [kit em ZIP](https://github.com/inematds/opencode-distri/archive/refs/heads/main.zip).
