@@ -57,7 +57,7 @@ switch ($Cmd) {
       if ($travas -and -not $env:OCD_APROVADO_OPENROUTER) { throw "OpenRouter e API paga: defina OCD_APROVADO_OPENROUTER" }
       if (-not $env:OPENROUTER_API_KEY) { throw "defina OPENROUTER_API_KEY neste terminal" }
     }
-    if ($Perfil -eq "local" -and $travas -and -not $env:APROVADO_MODELO_NEI) { throw "modelo local: defina APROVADO_MODELO_NEI" }
+    if ($Perfil -eq "local" -and $travas -and -not ($env:OCD_APROVADO_LOCAL -or $env:APROVADO_MODELO_NEI)) { throw "modelo local: defina OCD_APROVADO_LOCAL=<modelo e finalidade que voce aprovou>" }
     $a = @("--standalone", "run", "--archived", "-m", $Modelo)
     if ($Auto) { $a += "--auto" }; if ($Json) { $a += @("--format", "json") }
     & $oc @a $texto

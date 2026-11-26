@@ -35,11 +35,13 @@ t "config não tem chave escrita"     nao grep -qiE 'sk-or-|sk-[a-z0-9]{20}' "$R
 
 # 3. perfis e travas (sem rede)
 export OCD_CONF=/dev/null OCD_TRAVAS=1
-unset OCD_APROVADO_OPENROUTER APROVADO_MODELO_NEI OPENROUTER_API_KEY
+unset OCD_APROVADO_OPENROUTER OCD_APROVADO_LOCAL APROVADO_MODELO_NEI OPENROUTER_API_KEY
 t "perfis lista os 3"                 bash -c "'$OCD' perfis | grep -c -E '^(assinatura +openai/|openrouter +openrouter/|local +ollama/)' | grep -qx 3"
 t "openrouter recusa sem aprovação"   bash -c "! echo oi | '$OCD' run -p openrouter 2>/dev/null"
 t "openrouter: mensagem certa"        bash -c "echo oi | '$OCD' run -p openrouter 2>&1 | grep -q OCD_APROVADO_OPENROUTER"
-t "local recusa sem aprovação"        bash -c "echo oi | '$OCD' run -p local 2>&1 | grep -q APROVADO_MODELO_NEI"
+t "local recusa sem aprovação"        bash -c "echo oi | '$OCD' run -p local 2>&1 | grep -q OCD_APROVADO_LOCAL"
+t "local: mensagem sem nome de pessoa" bash -c "! echo oi | '$OCD' run -p local 2>&1 | grep -qiE 'NEI|dono'"
+t "linux.sh: travas ligadas por padrão" grep -q '^VPS=0; TRAVAS=1' "$RAIZ/instalar/linux.sh"
 t "perfil inválido recusa"            bash -c "! '$OCD' run -p xyz oi 2>/dev/null"
 t "prompt vazio recusa"               bash -c "! '$OCD' run -p assinatura </dev/null 2>/dev/null"
 t "modelo vem do nível (MENOR)"       bash -c "OCD_NIVEL=MENOR INEMA_CODEX_MENOR=teste-menor OCD_MODELOS_ENV=/dev/null '$OCD' perfis | grep -q 'openai/teste-menor'"

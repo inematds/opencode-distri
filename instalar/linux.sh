@@ -3,7 +3,7 @@
 #   instalar/linux.sh                 máquina com Ollama local (127.0.0.1:11434)
 #   instalar/linux.sh --vps           VPS sem GPU: perfil local desligado
 #   instalar/linux.sh --ollama URL    Ollama em outro lugar (ex.: http://<IP-tailscale>:11434/v1)
-#   instalar/linux.sh --sem-travas    máquina de outra pessoa: sem as travas de aprovação do Nei
+#   instalar/linux.sh --sem-travas    DESLIGA as travas de aprovação (não recomendado; a trava vale em qualquer máquina)
 # Não faz login nem chama modelo. Repetir é seguro (idempotente).
 set -euo pipefail
 

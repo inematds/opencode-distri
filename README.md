@@ -46,7 +46,7 @@ Três caminhos de modelo, e só eles:
 |---|---|---|---|
 | `assinatura` | login ChatGPT Plus/Pro no opencode (`opencode auth login openai`) | `openai/gpt-6.2-sol` (`INEMA_CODEX_*`) | — |
 | `openrouter` | chave `OPENROUTER_API_KEY` do `.env`, carregada só no processo filho | `openrouter/anthropic/claude-opus-5.5` (`INEMA_OPENROUTER_*`) | `OCD_APROVADO_OPENROUTER` |
-| `local` | Ollama (`127.0.0.1:11434` ou outro) | `ollama/qwen3.8:27b` (`INEMA_OLLAMA_*`) | `APROVADO_MODELO_NEI` |
+| `local` | Ollama (`127.0.0.1:11434` ou outro) | `ollama/qwen3.8:27b` (`INEMA_OLLAMA_*`) | `OCD_APROVADO_LOCAL` (ou `APROVADO_MODELO_NEI`) |
 
 - **Assinatura Claude não existe no opencode 2.x**: o provedor `anthropic` só aceita chave de API (conferido em 26/11/2026). Para Claude pela assinatura, o motor continua sendo o `claude` CLI.
 - Todo outro provedor fica bloqueado por `policies` na config global — inclusive os modelos `opencode/*-free`, que são API do próprio opencode.
@@ -60,11 +60,11 @@ Três caminhos de modelo, e só eles:
    - VPS sem GPU, daqui: `instalar/remoto.sh root@<IP> [-i ~/.ssh/<chave>]` (copia o repo e roda `linux.sh --vps` lá)
    - VPS usando o Ollama desta máquina pela Tailscale: `instalar/remoto.sh root@<IP> -- --ollama http://<IP-tailscale-da-maquina-com-GPU>:11434/v1`
    - Windows: `powershell -ExecutionPolicy Bypass -File instalar\windows.ps1 [-SemOllama] [-OllamaUrl URL]` (**ainda não testado em Windows real**)
-   - máquina de outra pessoa: acrescente `--sem-travas` / `-SemTravas`
+   - as travas ficam ligadas em qualquer máquina, inclusive de outra pessoa; `--sem-travas` / `-SemTravas` as desliga e não é recomendado
 2. 🧠 **Login da assinatura** (interativo, uma vez por máquina): `opencode auth login openai` → "Sign in with ChatGPT". Na VPS: `ssh -t root@<IP> opencode auth login openai`. Nunca copiar credencial de uma máquina para outra (`auth export`).
 3. ⚙️ **Conferir**: `ocd doctor` (versão, config com trava, servidor compartilhado desligado, logins, modelos `opencode/*` bloqueados, modelo de cada perfil).
 4. ⚙️ **Usar sem tela**: `ocd run [-p assinatura|openrouter|local] [--auto] [--json] "pedido"` ou `echo "pedido" | ocd run`. Interativo: `opencode` (TUI) ou `opencode mini`.
-5. 🧠 **Liberar um perfil pago/pesado** (só com OK do Nei, citado): `OCD_APROVADO_OPENROUTER="<o que foi aprovado>" ocd run -p openrouter …` · `APROVADO_MODELO_NEI="<modelo e finalidade>" ocd run -p local …` (nesta máquina o perfil local entra pela `fila-vaga gpu`).
+5. 🧠 **Liberar um perfil pago/pesado** (só com o OK de quem é dono da máquina e paga a conta, citado; no INEMA, o do Nei): `OCD_APROVADO_OPENROUTER="<o que foi aprovado>" ocd run -p openrouter …` · `OCD_APROVADO_LOCAL="<modelo e finalidade>" ocd run -p local …` (nesta máquina o perfil local entra pela `fila-vaga gpu`).
 6. 🤖 **Motor nos sistemas**: ver [integracoes/README.md](integracoes/README.md) — estado de cada sistema e o teste de fumaça que vem antes.
 7. ⚙️ **Testar o kit** (sem chamar modelo): `testes/rodar.sh` → `N ok, 0 falhas`.
 8. ⚙️ **Atualizar o opencode**: trocar `VERSAO_OPENCODE` em `instalar/linux.sh` (e `-Versao` no `windows.ps1`), rodar `testes/rodar.sh` e reinstalar.

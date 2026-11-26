@@ -28,7 +28,7 @@ Nada sai da máquina, sem conta e sem identidade. Para o `ocd`, é um modelo Oll
 
 ```bash
 # só com aprovação do Nei para o modelo e a finalidade (regra de modelos locais)
-APROVADO_MODELO_NEI="<modelo e para quê>" OCD_MODELO_LOCAL="orcarouter/Qwen3.8-27B-Uncensored" \
+OCD_APROVADO_LOCAL="<modelo e para quê>" OCD_MODELO_LOCAL="orcarouter/Qwen3.8-27B-Uncensored" \
   ocd run -p local "pedido"
 ollama stop orcarouter/Qwen3.8-27B-Uncensored   # depois
 ```

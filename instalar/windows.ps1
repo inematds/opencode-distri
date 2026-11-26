@@ -2,7 +2,7 @@
 #   powershell -ExecutionPolicy Bypass -File instalar\windows.ps1
 #   ... -OllamaUrl http://192.168.0.10:11434/v1   (Ollama em outra máquina)
 #   ... -SemOllama                                (sem modelo local)
-#   ... -SemTravas                                (máquina de outra pessoa)
+#   ... -SemTravas                                (DESLIGA as travas; não recomendado)
 # Não faz login nem chama modelo. Repetir é seguro.
 param(
   [string]$OllamaUrl = "http://127.0.0.1:11434/v1",

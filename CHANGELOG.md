@@ -4,7 +4,7 @@
 - OpenRouter entra na v1 das integrações (antes adiado para a v2), com a mesma trava `OCD_APROVADO_OPENROUTER`.
 - `docs/PROVEDORES-SEM-CENSURA.md`: modelos sem censura por perfil (Ollama local, OpenRouter) e o que fica fora (Venice, abliteration.ai), com base no guia provedores-semcensura (preços de 09/11/2026).
 - `PENDENCIAS.md`: o que falta, em ordem; testes pausados pelo Nei.
-- Config: o agente também fica proibido de ler chaves SSH (`*/.ssh/*`, `id_rsa`, `id_ed25519`, `id_ecdsa`), `*.pem`, `*.key` e `*.netrc`; teste novo (22 ok).
+- Config: o agente também fica proibido de ler chaves SSH (`*/.ssh/*`, `id_rsa`, `id_ed25519`, `id_ecdsa`), `*.pem`, `*.key` e `*.netrc`; testes novos (24 ok): segredos, liberação local sem nome de pessoa, travas ligadas por padrão; `OCD_APROVADO_LOCAL` genérico (`APROVADO_MODELO_NEI` continua valendo).
 - Guia PT/EN/ES em `guia/` (GitHub Pages via Actions) e README trilíngue.
 - intelecto-v2 sai da lista de integrações: já roda pela assinatura (v2.4.2).
 

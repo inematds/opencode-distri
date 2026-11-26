@@ -8,8 +8,9 @@
 #
 # Perfis: assinatura (ChatGPT pelo login do opencode) · openrouter (chave do .env,
 # carregada só no processo filho) · local (Ollama).
-# Travas (OCD_TRAVAS=1, padrão): openrouter exige OCD_APROVADO_OPENROUTER e local
-# exige APROVADO_MODELO_NEI — o texto da aprovação do dono, nunca inventado.
+# Travas (OCD_TRAVAS=1, padrão em toda máquina): openrouter exige OCD_APROVADO_OPENROUTER e local
+# exige OCD_APROVADO_LOCAL (APROVADO_MODELO_NEI também vale, por compatibilidade com o hook do INEMA)
+# — o texto do que a pessoa dona da máquina aprovou, nunca inventado.
 set -euo pipefail
 
 OCD_VERSAO="0.2.0"
@@ -116,10 +117,10 @@ cmd_run() {
 
   case "$perfil" in
     openrouter)
-      [[ $TRAVAS == 1 && -z "${OCD_APROVADO_OPENROUTER:-}" ]] && erro "OpenRouter é API paga: precisa de OCD_APROVADO_OPENROUTER=<aprovação do dono para esta finalidade>"
+      [[ $TRAVAS == 1 && -z "${OCD_APROVADO_OPENROUTER:-}" ]] && erro "OpenRouter é API paga: precisa de OCD_APROVADO_OPENROUTER=<o que você aprovou e para quê>"
       carrega_openrouter ;;
     local)
-      [[ $TRAVAS == 1 && -z "${APROVADO_MODELO_NEI:-}" ]] && erro "modelo local carrega a GPU: precisa de APROVADO_MODELO_NEI=<modelo e finalidade aprovados>" ;;
+      [[ $TRAVAS == 1 && -z "${OCD_APROVADO_LOCAL:-${APROVADO_MODELO_NEI:-}}" ]] && erro "modelo local carrega a GPU: precisa de OCD_APROVADO_LOCAL=<modelo e finalidade que você aprovou>" ;;
   esac
 
   local args=(--standalone run --archived -m "$modelo")

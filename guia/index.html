@@ -224,7 +224,7 @@
 </div>
 <div class="grid g3" style="margin-top:16px">
 <div class="card"><div class="num">1</div><h3>Use o que já paga</h3><p>A assinatura do ChatGPT vira o motor do agente. Não precisa de chave de API.</p></div>
-<div class="card"><div class="num">2</div><h3>Nada de gasto escondido</h3><p>O OpenRouter, que cobra por uso, e o modelo pesado no seu PC só ligam com uma liberação escrita: uma linha em que você diz o que aprovou. Sem ela, o motor nem liga.</p></div>
+<div class="card"><div class="num">2</div><h3>Nada de gasto escondido</h3><p>O OpenRouter, que cobra por uso, e o modelo pesado no seu PC só ligam com uma liberação escrita: uma linha em que você diz o que aprovou, que a sua IA monta com você depois do seu sim. A trava vem ligada em qualquer máquina. Sem ela, o motor nem liga.</p></div>
 <div class="card"><div class="num">3</div><h3>Um motor para robôs (próximo passo)</h3><p>O kit foi feito para o mesmo agente atender os robôs do Telegram e os sistemas do INEMA. Essa ligação ainda está sendo feita (<a href="#prova">veja o que falta</a>).</p></div>
 </div>
 </div></section>
@@ -235,7 +235,7 @@
 <div class="grid g3">
 <div class="card"><img alt="Pessoa em casa com um notebook e um PC lado a lado mostrando a mesma tela" class="quem-img" loading="lazy" src="assets/quem-varias.jpg"/><h3>💻 Quem usa várias máquinas</h3><p><strong>Ganha:</strong> o mesmo agente no notebook, no PC e na VPS, sem configurar três vezes.</p><p><strong>E mais:</strong> sabe sempre qual modelo está ligado em cada uma.</p></div>
 <div class="card"><img alt="Desenvolvedor olhando um painel com vários robôs de conversa ligados a um servidor" class="quem-img" loading="lazy" src="assets/quem-bots.jpg"/><h3>🤖 Quem tem robôs e sistemas</h3><p><strong>Ganha:</strong> um motor aberto para os robôs, ao lado do Claude e do Codex, que dá para trocar sem reescrever tudo. A ligação com os robôs do INEMA é o próximo passo do kit.</p><p><strong>E mais:</strong> roda numa VPS sem placa de vídeo, pela assinatura.</p></div>
-<div class="card"><img alt="Pesquisadora de segurança diante de dois monitores com gráficos de rede" class="quem-img" loading="lazy" src="assets/quem-seguranca.jpg"/><h3>🛡️ Quem pesquisa segurança</h3><p><strong>Ganha:</strong> o lugar certo para ligar um modelo sem censura e testar o próprio sistema, pelo OpenRouter ou no seu computador (aí precisa de uma placa de vídeo com uns 17 GB de memória ou mais).</p><p><strong>E mais:</strong> a mesma trava de arquivos de senha vale para qualquer modelo.</p></div>
+<div class="card"><img alt="Pesquisadora de segurança diante de dois monitores com gráficos de rede" class="quem-img" loading="lazy" src="assets/quem-seguranca.jpg"/><h3>🛡️ Quem pesquisa segurança</h3><p><strong>Ganha:</strong> o lugar certo para ligar um modelo sem censura e testar o próprio sistema, pelo OpenRouter ou no seu computador (aí precisa de uma placa de vídeo com uns 17 GB de memória própria (a da placa, não a do PC) ou mais).</p><p><strong>E mais:</strong> a mesma trava de arquivos de senha vale para qualquer modelo.</p></div>
 </div>
 </div></section>
 
@@ -279,7 +279,7 @@
 <h2>Modelos sem censura: <span class="amb">onde entram</span></h2>
 <p class="sub">Modelo "sem censura" é uma versão que não recusa pedidos. Serve para testar a segurança do seu sistema, pesquisar ou ter um assistente que não trava em assunto delicado. Já fizemos uma matéria só sobre isso, e o kit diz onde cada um se encaixa.</p>
 <div class="grid g3">
-<div class="card"><h3>🏠 No seu computador</h3><p>O caminho mais privado: nada sai da máquina, sem conta e sem identidade. Ele roda pelo Ollama, um programa grátis que põe modelos de IA para funcionar no seu PC. Por exemplo, as versões "Uncensored" do Qwen 3.8, um modelo aberto. Precisa de uma placa de vídeo com uns 17 GB de memória ou mais.</p></div>
+<div class="card"><h3>🏠 No seu computador</h3><p>O caminho mais privado: nada sai da máquina, sem conta e sem identidade. Ele roda pelo Ollama, um programa grátis que põe modelos de IA para funcionar no seu PC. Por exemplo, as versões "Uncensored" do Qwen 3.8, um modelo aberto. Precisa de uma placa de vídeo com uns 17 GB de memória própria (a da placa, não a do PC) ou mais.</p></div>
 <div class="card"><h3>💳 Pelo OpenRouter</h3><p>Sem placa de vídeo, pago por uso. Tem modelos que recusam menos, como o "Venice: Uncensored", a partir de US$ 0,20 por milhão de palavras-pedaço (tokens) de entrada (preço conferido em 09/11/2026).</p></div>
 <div class="card"><h3>🚪 Fora, por enquanto</h3><p>A Venice e a abliteration.ai, dois serviços pagos especializados em modelos sem censura, usados direto, têm os catálogos mais completos. Ficam trancadas até alguém liberar aquela API, e cada uma vai ganhar a sua própria trava.</p></div>
 </div>
@@ -309,7 +309,7 @@ Quero ter o opencode igual em todas as minhas máquinas. Neste computador:
    e o check-up "ocd doctor". Mostre o resultado.
 4. Não chame nenhum modelo, não use chave de API e não baixe modelo sem eu pedir.
    O login do ChatGPT eu faço.
-5. Se eu quiser também na minha VPS: me pergunte o endereço e a chave SSH, instale daqui com
+5. Se eu quiser também na minha VPS: me pergunte o endereço (IP) e o acesso SSH (quem montou a VPS tem), instale daqui com
    instalar/remoto.sh e me passe a linha do login do ChatGPT para eu rodar lá
    (ssh -t ... opencode auth login openai). Avise que esse caminho ainda não foi testado numa VPS real.</pre>
 <button class="btn" id="copiarPedido" style="margin-top:10px">Copiar o pedido</button>
@@ -334,7 +334,7 @@ Quero ter o opencode igual em todas as minhas máquinas. Neste computador:
 <span class="chip">A prova</span>
 <h2>O que já foi <span class="amb">conferido</span></h2>
 <div class="grid g3">
-<div class="card"><div class="num">21</div><h3>testes, zero falhas</h3><p>A trava bloqueia os outros provedores, o agente não enxerga os modelos "grátis" e o check-up passa. Nenhum teste chama modelo.</p></div>
+<div class="card"><div class="num">✔</div><h3>todos os testes passam</h3><p>A trava bloqueia os outros provedores, os arquivos de senha mais comuns ficam proibidos, o agente não enxerga os modelos "grátis" e o check-up passa. Nenhum teste chama modelo.</p></div>
 <div class="card"><div class="num">1</div><h3>máquina instalada</h3><p>Instalado no computador do INEMA, com Linux e placa de vídeo. O check-up passa.</p></div>
 <div class="card"><div class="num">0</div><h3>modelos chamados</h3><p>Por decisão nossa, ainda não rodou com modelo de verdade. O primeiro teste com um modelo no próprio computador está na lista do que falta.</p></div>
 </div>
