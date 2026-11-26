@@ -1,0 +1,28 @@
+{
+  // opencode-distri — config global do opencode (2.x).
+  // Gerado por instalar/linux.sh ou instalar/windows.ps1. Backup do anterior ao lado (.bak-<data>).
+  "$schema": "https://opencode.ai/config.json",
+
+  // Só três caminhos de modelo: assinatura ChatGPT (openai), OpenRouter e Ollama local.
+  // Todo o resto fica bloqueado, inclusive os modelos "opencode/*-free" (API do próprio opencode).
+  "policies": [
+    { "action": "provider.use", "resource": "*", "effect": "deny" },
+    { "action": "provider.use", "resource": "openai", "effect": "allow" },
+    { "action": "provider.use", "resource": "openrouter", "effect": "allow" },
+    { "action": "provider.use", "resource": "ollama", "effect": "allow" }
+  ],
+
+  // O agente nunca lê arquivo de segredo.
+  "permissions": [
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "read", "resource": "*credentials*", "effect": "deny" }
+  ],
+
+  "providers": {
+    // Ollama: __OLLAMA_URL__ é trocado pelo instalador (padrão http://127.0.0.1:11434/v1).
+    "ollama": { "settings": { "baseURL": "__OLLAMA_URL__" } },
+    // OpenRouter: a chave nunca fica aqui. O `ocd` carrega OPENROUTER_API_KEY só no processo filho.
+    "openrouter": { "settings": { "apiKey": "{env:OPENROUTER_API_KEY}" } }
+  }
+}

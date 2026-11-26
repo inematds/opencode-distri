@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+# ocd — porta única do opencode-distri.
+#   ocd perfis                      mostra os 3 perfis e o modelo de cada um
+#   ocd doctor                      confere instalação, config, travas e logins
+#   ocd login                       explica como entrar com a assinatura ChatGPT
+#   ocd run [-p PERFIL] [-m MODELO] [--auto] [--json] [--] [PROMPT...]
+#                                   roda sem tela; sem PROMPT lê do stdin
+#
+# Perfis: assinatura (ChatGPT pelo login do opencode) · openrouter (chave do .env,
+# carregada só no processo filho) · local (Ollama).
+# Travas (OCD_TRAVAS=1, padrão): openrouter exige OCD_APROVADO_OPENROUTER e local
+# exige APROVADO_MODELO_NEI — o texto da aprovação do dono, nunca inventado.
+set -euo pipefail
+
+OCD_VERSAO="0.1.0"
+CONF="${OCD_CONF:-$HOME/.config/opencode-distri/ocd.env}"
+[[ -f "$CONF" ]] && . "$CONF"
+MODELOS_ENV="${OCD_MODELOS_ENV:-$HOME/.config/inema/modelos.env}"
+[[ -f "$MODELOS_ENV" ]] && . "$MODELOS_ENV"
+
+OC_BIN="${OPENCODE_BIN:-$(command -v opencode || true)}"
+NIVEL="${OCD_NIVEL:-TOPO}"
+TRAVAS="${OCD_TRAVAS:-1}"
+TIMEOUT_S="${OCD_TIMEOUT:-1800}"
+ENV_FILES="${OCD_ENV_FILES:-}"   # lista de .env separada por ":" (definida no ocd.env)
+
+erro() { echo "ocd: $*" >&2; exit 2; }
+
+modelo_do_perfil() {
+  case "$1" in
+    assinatura) echo "openai/${OCD_MODELO_ASSINATURA:-$(nivel_var CODEX)}" ;;
+    openrouter) echo "openrouter/${OCD_MODELO_OPENROUTER:-$(nivel_var OPENROUTER)}" ;;
+    local)      echo "ollama/${OCD_MODELO_LOCAL:-$(nivel_var OLLAMA)}" ;;
+    *) erro "perfil desconhecido: $1 (use assinatura | openrouter | local)" ;;
+  esac
+}
+
+nivel_var() {
+  local v="INEMA_${1}_${NIVEL}" p
+  case "$1" in CODEX) p=OCD_PADRAO_ASSINATURA ;; OPENROUTER) p=OCD_PADRAO_OPENROUTER ;; OLLAMA) p=OCD_PADRAO_LOCAL ;; esac
+  echo "${!v:-${!p:-}}"
+}
+
+carrega_openrouter() {
+  [[ -n "${OPENROUTER_API_KEY:-}" ]] && return 0
+  local f linha
+  IFS=: read -ra arqs <<< "$ENV_FILES"
+  for f in "${arqs[@]}"; do
+    [[ -f "$f" ]] || continue
+    linha="$(grep -m1 '^OPENROUTER_API_KEY=' "$f" || true)"
+    if [[ -n "$linha" ]]; then
+      linha="${linha#OPENROUTER_API_KEY=}"; linha="${linha%\"}"; linha="${linha#\"}"
+      export OPENROUTER_API_KEY="$linha"; return 0
+    fi
+  done
+  erro "OPENROUTER_API_KEY não achada (defina OCD_ENV_FILES no ocd.env ou exporte a variável)"
+}
+
+cmd_perfis() {
+  local p
+  for p in assinatura openrouter local; do
+    printf '%-11s %s\n' "$p" "$(modelo_do_perfil "$p")"
+  done
+  echo "(nível $NIVEL; trocar: OCD_NIVEL=SUPER|TOPO|EXECUTOR|MENOR ou OCD_MODELO_<PERFIL>)"
+}
+
+cmd_login() {
+  cat <<'EOF'
+Assinatura ChatGPT (Plus/Pro) no opencode — precisa de terminal interativo:
+  opencode auth login openai        → escolha "Sign in with ChatGPT"
+  opencode auth list                → confere
+Não há login por assinatura Claude no opencode 2.x (anthropic = só chave de API).
+GitHub Copilot também é assinatura: opencode auth login github-copilot
+EOF
+}
+
+cmd_doctor() {
+  local ok=1 cfgdir
+  echo "ocd $OCD_VERSAO"
+  if [[ -x "$OC_BIN" ]]; then echo "✔ opencode: $OC_BIN ($("$OC_BIN" --version 2>/dev/null))"; else echo "✘ opencode não achado"; ok=0; fi
+  if [[ $ok == 1 ]]; then
+    cfgdir="$("$OC_BIN" debug paths config 2>/dev/null || true)"
+    if grep -qs '"provider.use"' "$cfgdir/opencode.jsonc"; then echo "✔ config com trava de provedores: $cfgdir/opencode.jsonc"
+    else echo "✘ config do opencode-distri ausente em $cfgdir"; ok=0; fi
+    echo "  serviço compartilhado: $("$OC_BIN" service get disabled 2>/dev/null | tr -d '\n' || echo '?') (esperado: true = desligado)"
+    echo "  logins: $(cd /tmp && timeout 30 "$OC_BIN" --standalone auth list 2>&1 | tr '\n' ' ')"
+    local free
+    free="$(cd /tmp && timeout 60 "$OC_BIN" --standalone models 2>/dev/null | grep -c '^opencode/' || true)"
+    if [[ "$free" == 0 ]]; then echo "✔ modelos opencode/*-free bloqueados"; else echo "✘ $free modelos opencode/* liberados (trava não pegou)"; ok=0; fi
+  fi
+  echo "  travas: $([[ $TRAVAS == 1 ]] && echo ligadas || echo DESLIGADAS)"
+  cmd_perfis
+  [[ $ok == 1 ]]
+}
+
+cmd_run() {
+  local perfil="${OCD_PERFIL:-assinatura}" modelo="" auto=0 json=0
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -p|--perfil) perfil="$2"; shift 2 ;;
+      -m|--modelo) modelo="$2"; shift 2 ;;
+      --auto) auto=1; shift ;;
+      --json) json=1; shift ;;
+      --) shift; break ;;
+      -*) erro "opção desconhecida: $1" ;;
+      *) break ;;
+    esac
+  done
+  [[ -x "$OC_BIN" ]] || erro "opencode não instalado (rode instalar/linux.sh)"
+  [[ -n "$modelo" ]] || modelo="$(modelo_do_perfil "$perfil")"
+  [[ "$modelo" == */ ]] && erro "perfil $perfil sem modelo definido (nível $NIVEL)"
+
+  local prompt
+  if [[ $# -gt 0 ]]; then prompt="$*"; else prompt="$(cat)"; fi
+  [[ -n "$prompt" ]] || erro "prompt vazio"
+
+  case "$perfil" in
+    openrouter)
+      [[ $TRAVAS == 1 && -z "${OCD_APROVADO_OPENROUTER:-}" ]] && erro "OpenRouter é API paga: precisa de OCD_APROVADO_OPENROUTER=<aprovação do dono para esta finalidade>"
+      carrega_openrouter ;;
+    local)
+      [[ $TRAVAS == 1 && -z "${APROVADO_MODELO_NEI:-}" ]] && erro "modelo local carrega a GPU: precisa de APROVADO_MODELO_NEI=<modelo e finalidade aprovados>" ;;
+  esac
+
+  local args=(--standalone run --archived -m "$modelo")
+  [[ $auto == 1 ]] && args+=(--auto)
+  [[ $json == 1 ]] && args+=(--format json)
+  args+=("$prompt")
+
+  local pre=(timeout "$TIMEOUT_S")
+  # Nesta máquina (spark) o passo pesado pega a vaga da GPU.
+  if [[ "$perfil" == local ]] && command -v fila-vaga >/dev/null 2>&1; then
+    pre=(fila-vaga gpu "ocd" -- "${pre[@]}")
+  fi
+  exec "${pre[@]}" "$OC_BIN" "${args[@]}"
+}
+
+case "${1:-}" in
+  perfis) shift; cmd_perfis "$@" ;;
+  doctor) shift; cmd_doctor "$@" ;;
+  login)  shift; cmd_login "$@" ;;
+  run)    shift; cmd_run "$@" ;;
+  -v|--version|versao) echo "ocd $OCD_VERSAO" ;;
+  *) sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+esac
