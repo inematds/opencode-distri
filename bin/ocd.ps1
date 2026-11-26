@@ -10,7 +10,7 @@ param(
   [Parameter(Position = 1, ValueFromRemainingArguments = $true)][string[]]$Prompt
 )
 $ErrorActionPreference = "Stop"
-$Versao = "0.1.0"
+$Versao = "0.2.0"
 
 $cfg = @{}
 $pref = Join-Path $env:USERPROFILE ".config\opencode-distri\ocd.env"

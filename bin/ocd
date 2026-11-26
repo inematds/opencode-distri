@@ -12,7 +12,7 @@
 # exige APROVADO_MODELO_NEI — o texto da aprovação do dono, nunca inventado.
 set -euo pipefail
 
-OCD_VERSAO="0.1.0"
+OCD_VERSAO="0.2.0"
 CONF="${OCD_CONF:-$HOME/.config/opencode-distri/ocd.env}"
 [[ -f "$CONF" ]] && . "$CONF"
 MODELOS_ENV="${OCD_MODELOS_ENV:-$HOME/.config/inema/modelos.env}"

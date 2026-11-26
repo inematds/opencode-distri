@@ -31,6 +31,14 @@ Três caminhos de modelo, e só eles:
 7. ⚙️ **Testar o kit** (sem chamar modelo): `testes/rodar.sh` → `N ok, 0 falhas`.
 8. ⚙️ **Atualizar o opencode**: trocar `VERSAO_OPENCODE` em `instalar/linux.sh` (e `-Versao` no `windows.ps1`), rodar `testes/rodar.sh` e reinstalar.
 
+## Provedores sem censura
+
+Quais modelos sem censura cabem nos perfis `local` e `openrouter`, e o que fica de fora (Venice, abliteration.ai): [docs/PROVEDORES-SEM-CENSURA.md](docs/PROVEDORES-SEM-CENSURA.md). Matéria base: [Provedores de IA sem censura](https://inematds.github.io/provedores-semcensura/guia/).
+
+## O que falta
+
+[PENDENCIAS.md](PENDENCIAS.md): testes (pausados até o Nei liberar), runners do inemaccbot, openpcbotv3 e exb, perfis Venice e abliteration.ai.
+
 ## Modelos
 
 A ordem é: `OCD_MODELO_<PERFIL>` (fixo) → `~/.config/inema/modelos.env` no nível `OCD_NIVEL` (`SUPER|TOPO|EXECUTOR|MENOR`) → `OCD_PADRAO_<PERFIL>` em `~/.config/opencode-distri/ocd.env`. Trocar o modelo de todos os sistemas continua sendo só no `modelos.env`.
@@ -44,6 +52,8 @@ A ordem é: `OCD_MODELO_<PERFIL>` (fixo) → `~/.config/inema/modelos.env` no n�
 | `instalar/linux.sh`, `instalar/windows.ps1`, `instalar/remoto.sh` | instaladores (idempotentes, fazem backup da config anterior) |
 | `integracoes/README.md` | onde o opencode entra em cada sistema |
 | `testes/rodar.sh` | testes sem modelo |
+| `docs/PROVEDORES-SEM-CENSURA.md` | modelos sem censura por perfil |
+| `PENDENCIAS.md` | o que falta, em ordem |
 
 Versão: ver `VERSION` e `CHANGELOG.md`. opencode fixado em 2.4.2.
 
