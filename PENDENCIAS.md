@@ -44,6 +44,8 @@ Ver [docs/PROVEDORES-SEM-CENSURA.md](docs/PROVEDORES-SEM-CENSURA.md).
 
 ## Divulgação
 
+Feito em 26/11/2026: guia PT/EN/ES no ar (revisor independente aprovou na 5ª rodada), portal inema.club + catálogo PRO, tópico no INEMA.AGENTES (https://t.me/c/2433384436/7504).
+
 13. [ ] **Vídeo do guia** (regra D21: todo guia tem explicavideo com avatar em `#video`, nos 3 idiomas). Sai depois do guia.
 
 ## Não fazer
